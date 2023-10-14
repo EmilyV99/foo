@@ -7,12 +7,12 @@ ZQuest Classic has grown by a ***huge*** amount between 2.50.2/2.53 and 2.55 ver
  * [Player](#player)
  * [New Quest Features](#new-quest-features)
    * [New Combo Features (all types)](#new-combo-features-all-types)
+   * [New Combo Types](#new-combo-types)
    * [Real Dark Rooms](#real-dark-rooms)
    * [Pitfalls](#pitfalls)
    * [New Pushblock Features](#new-pushblock-features)
    * [Light Beam Puzzles](#light-beam-puzzles)
    * [Chests / Lockblocks](#chests--lockblocks)
-   * [Other Combo Types](#new-combo-types)
 
 ## Editor
 ### GUI changes
@@ -60,6 +60,27 @@ Combos in general have been improved drastically.
   * Going over every trigger available would make this summary far too long and complex, so have a look at the options yourself and play around with them! This system was designed with pure creativity in mind.
 * Every combo also has a `Lifting` tab, related to the `Lift Glove` itemclass which allows the player to pick up combos above their head and throw them. This can be used for things like lifting pots or bomb flowers.
 * And finally, combos now have their own script type which can be assigned to each combo.
+
+### New Combo Types
+* `Block Weapon (Custom)` can block any variety of weapons as set in the `Triggers` tab
+* `Bridge` combos can "cover up" combos on layers below them (making the covered combos solidity and type-effects not occur)
+* `Button Prompt` combos can display a prompt (ex. above player's head) when faced
+* `Cutscene Trigger` combos, combined with the `Triggers` tab features, can enter/exit a "cutscene mode" that can disable various player inputs
+* `Glass` combos allow [Light Beams](#light-beam-puzzles) to pass through even when solid
+* `Icy Floor` combos allow customizable slipperiness. Currently, only implemented to be able to slip Pushblocks, though more features are planned.
+* `Light Trigger` combos can trigger secrets as part of [Light Beam Puzzles](#light-beam-puzzles)
+* `Liquid` combos are not new- `Water` was just renamed. Though, there are a LOT more features to it now, including being able to passively heal or damage the player. (`Shallow Liquid` was changed from `Shallow Water` similarly)
+* `Mirror (Custom)` combos can reflect weapons/light beams in fancy custom ways based on directions.
+* [`Pitfall` combos](#pitfalls) act as bottomless pits, with falling similar to drowning.
+* `Push (Generic)` combo types allow fancy custom [pushblock](#new-pushblock-features) stuff
+* `Shooter` combos act as turrets. They can fire either automatically at a fixed or variable rate, or via `Triggers` tab `->ComboType Effects` flag. They can either fire friendly (player) weapons, or harmful (enemy) weapons.
+* `Signpost` combos can be read, either by walking into them or via any combination of the buttons A,B,L,R,Ex1-Ex4, configured the same way as [chests and lockblocks](#chests--lockblocks)- including the ability to set up a prompt combo. When read they cause a message string to display.
+* `Slope` combos can create custom diagonal collision. This can be useful for angled mountains in overhead view, or standard 2d sideview slopes. Additionally, in sideview, they can be set to act like optional stairs, which you will walk *past* by default, unless you are holding up/down as you walk past to indicate you want to go on the slope. Additionally, they can be set to be pass-throughable from specific directions.
+* `Spotlight` combos shoot [Light Beams](#light-beam-puzzles).
+* [`Switch` combos](#paired-switches), when triggered via `Triggers` tab `->ComboType Effects`, can toggle various states usable by `Switch Block` combos and the `Triggers` tab.
+* [`Switch Block` combos](#paired-switches) can change based on various either level-based or global states.
+* `SwitchHook Block` combos can be swapped with by the `SwitchHook` item, and can be customized with some additional settings.
+* `Torch` combos light up [New Dark Rooms](#real-dark-rooms)
 
 ### Real Dark Rooms
 Enabled via the Quest Rule `New Dark Rooms`, this changes from the classic dark room style which darkens the entire palette, and changes to a style which allows circles/cones of light to reveal what's underneath the darkness.
@@ -112,24 +133,3 @@ Multiple quest rules affect new push block features, of which there are several.
   * You can set a "Prompt Combo" which will display at a given x,y offset from the player (ex. above the player's head) when they are able to interact with it. For locked chests/blocks, you can also set a secondary combo to display *instead* when you are unable to unlock them.
 * Locked chests/blocks can be given various lock settings, instead of just "1 key unlocks it"
 * Locked chests/blocks can be given a message string to display when the player tries and fails to unlock it (ex. "You do not have a Small Key!")
-
-### New Combo Types
-* `Block Weapon (Custom)` can block any variety of weapons as set in the `Triggers` tab
-* `Bridge` combos can "cover up" combos on layers below them (making the covered combos solidity and type-effects not occur)
-* `Button Prompt` combos can display a prompt (ex. above player's head) when faced
-* `Cutscene Trigger` combos, combined with the `Triggers` tab features, can enter/exit a "cutscene mode" that can disable various player inputs
-* `Glass` combos allow [Light Beams](#light-beam-puzzles) to pass through even when solid
-* `Icy Floor` combos allow customizable slipperiness. Currently, only implemented to be able to slip Pushblocks, though more features are planned.
-* `Light Trigger` combos can trigger secrets as part of [Light Beam Puzzles](#light-beam-puzzles)
-* `Liquid` combos are not new- `Water` was just renamed. Though, there are a LOT more features to it now, including being able to passively heal or damage the player. (`Shallow Liquid` was changed from `Shallow Water` similarly)
-* `Mirror (Custom)` combos can reflect weapons/light beams in fancy custom ways based on directions.
-* [`Pitfall` combos](#pitfalls) act as bottomless pits, with falling similar to drowning.
-* `Push (Generic)` combo types allow fancy custom [pushblock](#new-pushblock-features) stuff
-* `Shooter` combos act as turrets. They can fire either automatically at a fixed or variable rate, or via `Triggers` tab `->ComboType Effects` flag. They can either fire friendly (player) weapons, or harmful (enemy) weapons.
-* `Signpost` combos can be read, either by walking into them or via any combination of the buttons A,B,L,R,Ex1-Ex4, configured the same way as [chests and lockblocks](#chests--lockblocks)- including the ability to set up a prompt combo. When read they cause a message string to display.
-* `Slope` combos can create custom diagonal collision. This can be useful for angled mountains in overhead view, or standard 2d sideview slopes. Additionally, in sideview, they can be set to act like optional stairs, which you will walk *past* by default, unless you are holding up/down as you walk past to indicate you want to go on the slope. Additionally, they can be set to be pass-throughable from specific directions.
-* `Spotlight` combos shoot [Light Beams](#light-beam-puzzles).
-* [`Switch` combos](#paired-switches), when triggered via `Triggers` tab `->ComboType Effects`, can toggle various states usable by `Switch Block` combos and the `Triggers` tab.
-* [`Switch Block` combos](#paired-switches) can change based on various either level-based or global states.
-* `SwitchHook Block` combos can be swapped with by the `SwitchHook` item, and can be customized with some additional settings.
-* `Torch` combos light up [New Dark Rooms](#real-dark-rooms)
