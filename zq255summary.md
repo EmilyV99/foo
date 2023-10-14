@@ -126,7 +126,7 @@ Multiple quest rules affect new push block features, of which there are several.
 * [`Pitfall` combos](#pitfalls) act as bottomless pits, with falling similar to drowning.
 * `Push (Generic)` combo types allow fancy custom [pushblock](#new-pushblock-features) stuff
 * `Shooter` combos act as turrets. They can fire either automatically at a fixed or variable rate, or via `Triggers` tab `->ComboType Effects` flag. They can either fire friendly (player) weapons, or harmful (enemy) weapons.
-* `Signpost` combos can be read, either by walking into them or via any combination of the buttons A,B,L,R,Ex1-Ex4, configured the same way as [chests and lockblocks](#chests-lockblocks)- including the ability to set up a prompt combo. When read they cause a message string to display.
+* `Signpost` combos can be read, either by walking into them or via any combination of the buttons A,B,L,R,Ex1-Ex4, configured the same way as [chests and lockblocks](#chests--lockblocks)- including the ability to set up a prompt combo. When read they cause a message string to display.
 * `Slope` combos can create custom diagonal collision. This can be useful for angled mountains in overhead view, or standard 2d sideview slopes. Additionally, in sideview, they can be set to act like optional stairs, which you will walk *past* by default, unless you are holding up/down as you walk past to indicate you want to go on the slope. Additionally, they can be set to be pass-throughable from specific directions.
 * `Spotlight` combos shoot [Light Beams](#light-beam-puzzles).
 * [`Switch` combos](#paired-switches), when triggered via `Triggers` tab `->ComboType Effects`, can toggle various states usable by `Switch Block` combos and the `Triggers` tab.
