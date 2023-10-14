@@ -77,7 +77,7 @@ Combos in general have been improved drastically.
   * Speed modification settings (apply to the player when the combo is centered under the player)
   * Sprites / SFX that display / play in various conditions, such as when the combo appears onscreen, disappears from the screen, or is being walked/stood on by the player.
 * Every combo has the `Triggers` tab, which allows for INSANELY powerful customization of the combo through various settings. Due to the sheer number of options on the triggers tab, it may be a bit confusing to navigate, but hopefully the many `?` buttons throughout should make it easier to navigate. Creating simple behaviors should be easy; ex. a `Step->Next` trigger could be created simply by checking the `Step->` flag, and setting the `Combo Change` value to `1`. (`Step->Previous` would be just as easy, instead using `-1` for the combo change).
-  * Additionally, some combo types support the extra-special `->ComboType Effects` flag, which will cause an effect to occur related to the specific combo type. A great example of this is `Damage` combos, which will hurt the player when their `->ComboType Effects` trigger occurs (regardless of if the player is anywhere near the combo or not).
+  * Additionally, some combo types support the extra-special `->ComboType Effects` flag, which will cause an effect to occur related to the specific combo type. A great example of this is `Damage` combos, which will hurt the player when their `->ComboType Effects` trigger occurs (regardless of if the player is anywhere near the combo or not). (In other sections of this guide, when it is mentioned that '`Triggers` tab features' interact with a combo type, this flag is what causes this to happen.)
     * A great use of this specific interaction would be a damaging "Hot Room"- by simply combining a `Timer` trigger with the `->ComboType Effects` result (optionally using an inverted item condition to make it **only trigger if you do not have a specific item**), you have yourself a ticking damage hot room in any room the combo is placed in.
   * Going over every trigger available would make this summary far too long and complex, so have a look at the options yourself and play around with them! This system was designed with pure creativity in mind.
 * Every combo also has a `Lifting` tab, related to the `Lift Glove` itemclass which allows the player to pick up combos above their head and throw them. This can be used for things like lifting pots or bomb flowers.
@@ -91,21 +91,36 @@ Combos in general have been improved drastically.
 * `Glass` combos allow [Light Beams](#light-beam-puzzles) to pass through even when solid
 * `Icy Floor` combos allow customizable slipperiness. Currently, only implemented to be able to slip Pushblocks, though more features are planned.
 * `Light Trigger` combos can trigger secrets as part of [Light Beam Puzzles](#light-beam-puzzles)
-* `Liquid` combos are not new- `Water` was just renamed. Though, there are a LOT more features to it now, including being able to passively heal or damage the player. (`Shallow Liquid` was changed from `Shallow Water` similarly)
 * `Mirror (Custom)` combos can reflect weapons/light beams in fancy custom ways based on directions.
 * [`Pitfall` combos](#pitfalls) act as bottomless pits, with falling similar to drowning.
 * `Push (Generic)` combo types allow fancy custom [pushblock](#new-pushblock-features) stuff
 * `Shooter` combos act as turrets. They can fire either automatically at a fixed or variable rate, or via `Triggers` tab `->ComboType Effects` flag. They can either fire friendly (player) weapons, or harmful (enemy) weapons.
-* `Signpost` combos can be read, either by walking into them or via any combination of the buttons A,B,L,R,Ex1-Ex4, configured the same way as [chests and lockblocks](#chests--lockblocks)- including the ability to set up a prompt combo. When read they cause a message string to display.
+* `Signpost` combos can be read, either by walking into them or via any combination of the buttons A,B,L,R,Ex1-Ex4, configured the same way as [chests and lockblocks](#chests--lockblocks)- including the ability to set up a prompt combo. When read they cause a message string to display. (`Triggers` tab features can also trigger the string to play)
 * `Slope` combos can create custom diagonal collision. This can be useful for angled mountains in overhead view, or standard 2d sideview slopes. Additionally, in sideview, they can be set to act like optional stairs, which you will walk *past* by default, unless you are holding up/down as you walk past to indicate you want to go on the slope. Additionally, they can be set to be pass-throughable from specific directions.
 * `Spotlight` combos shoot [Light Beams](#light-beam-puzzles).
+* `Step->Effects` combos can play a sound when stepped on, and act like a landmine (spawning a weapon). (`Triggers` tab features can trigger the effect)
 * [`Switch` combos](#paired-switches), when triggered via `Triggers` tab `->ComboType Effects`, can toggle various states usable by `Switch Block` combos and the `Triggers` tab.
 * [`Switch Block` combos](#paired-switches) can change based on various either level-based or global states.
 * `SwitchHook Block` combos can be swapped with by the `SwitchHook` item, and can be customized with some additional settings.
 * `Torch` combos light up [New Dark Rooms](#real-dark-rooms)
 
 ### Improved Combo Types
-* foo
+* `Armos` combos can now have either 1 or 2 enemies directly configured to them. They also have a flag which allows multiple statues placed touching to act as a single large statue, when spawning large enemies. (`Triggers` tab features can cause the statue to come to life)
+* Various warp type combos (`Auto Side Warp`, `Direct Warp`, `Dive Warp`, `Sensitive Warp`, `Stairs`, `Swim Warp`) can have a custom warp sound effect set to play. (`Triggers` tab features can cause the player to warp via the warp)
+* `BS Grave`/`Grave` combos can now have either 1 or 2 enemies directly configured to them.
+* The various `Bush`/`Flowers`/`Slash (Item)`/`Slash->Next (Item)` type combos can have a custom 'slashed' sprite, custom item dropset or specific item id to drop, and custom 'slashed' SFX configured. (`Triggers` tab features can 'slash' the bush)
+  * `Slash->Next` is similar, but without the item drop configuration
+  * `Tall Grass` is similar, and also has its 'walking through grass' sprite customizable
+* [`Chest` combos](#chests--lockblocks) are now highly configurable. (`Triggers` tab features can attempt to open the chest)
+* `Conveyor` combos now can have a custom speed/direction (including diagonals/angles) configured, as well as the ability to:
+  * Stun the player to prevent them from fighting the conveyor
+  * Force the player's facing direction to match the conveyor's movement
+  * Smartly push the player around corners, preventing getting stuck
+  * Be disabled by owning a `Boots` item that has the `Heavy` flag checked
+* `Damage` combos can have their damage amount as well as whether or not they deal knockback configured. (`Triggers` tab features can cause the player to be hit by the combo)
+* `Liquid` (renamed from `Water`) has had many features added now, including being able to passively heal or damage the player, require higher level flippers to swim in, have a custom drown damage/sfx, and can have some corners of it act as 'shallow' based on some flags. (`Shallow Liquid` was changed from `Shallow Water` similarly)
+* [`Lock Block` combos](#chests--lockblocks) are now highly configurable. (`Triggers` tab features can attempt to unlock the block)
+* `Save Point` type combos can be set to restore a percentage of the player's Life and/or Magic when interacted with, in addition to popping up the save menu. (`Triggers` tab features can 'interact' with the save point)
 
 ### New Bottles
 The `Bottle` item type can be set to one of up to 256 separate 'slots'- you usually want at most one item per slot. When either the player picks up an item of the `Bottle Fillers` item type, makes a purchase in a `Bottle Shop` room type, or collects a Fairy with a `Bug Net`, a bottle can be filled with a type of "contents". In `Quest->Misc Data->Bottle Types`, these contents can be configured.<br/><img src="https://cdn.discordapp.com/attachments/1162478250208022679/1162809697905160372/bottletype1.png?ex=653d49eb&is=652ad4eb&hm=315a0d6913a16918137606a995935ef977b836d713422704b1dd00e6127bd437&" alt="Screenshot of the editor, showing a 'Red Potion' bottle type that restores 100% of the 'Life' counter" width="50%" height="50%"/><img src="https://cdn.discordapp.com/attachments/1162478250208022679/1162809698219720857/bottletype2.png?ex=653d49ec&is=652ad4ec&hm=d50a71f50b6ca2af1293358fe2ecc7417b147d65678161a3e35ccebca5fcf9c4&" alt="Screenshot of the editor, showing a 'Fairy' bottle type that restores 48 of the 'Life' counter, and is used automatically on death" width="50%" height="50%"/>
