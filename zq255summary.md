@@ -12,7 +12,7 @@ ZQuest Classic has grown by a ***huge*** amount between 2.50.2/2.53 and 2.55 ver
    * [New Pushblock Features](#new-pushblock-features)
    * [Light Beam Puzzles](#light-beam-puzzles)
    * [Chests / Lockblocks](#chests-lockblocks)
-   * [Other Combo Types](#other-combo-types)
+   * [Other Combo Types](#new-combo-types)
 
 ## Editor
 ### GUI changes
