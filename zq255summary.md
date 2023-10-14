@@ -11,6 +11,8 @@ ZQuest Classic has grown by a ***huge*** amount between 2.50.2/2.53 and 2.55 ver
    * [Pitfalls](#pitfalls)
    * [New Pushblock Features](#new-pushblock-features)
    * [Light Beam Puzzles](#light-beam-puzzles)
+   * [Chests / Lockblocks](#chests-lockblocks)
+   * [Other Combo Types](#other-combo-types)
 
 ## Editor
 ### GUI changes
@@ -46,7 +48,7 @@ There are plenty of new features that can be used in your quests. Some used to b
 Features below are not listed in any particular order, though I will attempt to group similar features together.
 ### New Combo Features (all types)
 Combos in general have been improved drastically.
-* Each combo type has up to 8 attribytes (0 to 255 values), 8 attrishorts (-32768 to +32767 values), 4 attributes (-214748.3648 to +214748.3647 values), and 16 flags (checkboxes) for custom configuration that is specific to the combo type. Not all of these type-specific features will be covered in this summary, as many of the features are simple small customizations of the type (like damage dealt by damage combos, conveyor speed and direction, etc).
+* Each combo type has up to 8 attribytes (0 to 255 values), 8 attrishorts (-32768 to +32767 values), 4 attributes (-214748.3648 to +214748.3647 values), and 16 flags (checkboxes) for custom configuration that is specific to the combo type. Not all of these type-specific features will be covered in this summary, as many of the features are simple small customizations of the type (like damage dealt by damage combos, conveyor speed and direction, etc). Many combo types have a special "Wizard" dialog available via a button in the combo editor which is designed to make these easier to set up.
 * Every combo has checkboxes for if they are hookshot-grabbable or switch-hookable, allowing things like chests and signs to be hookable inherently.
 * In addition to the solidity square, combos now have a green `Effect` square. By default this square is filled in, and any section that is NOT filled in acts as though it is `(None)` type, regardless of its' actual type.
 * Every combo has a `General` tab, which currently has the following neat settings:
@@ -101,3 +103,33 @@ Multiple quest rules affect new push block features, of which there are several.
   * Any `Light Trigger` with a `Trigger Set` of `0` will be triggered by ANY `Spotlight`.
   * `Trigger Set` of 1 through 32 are unique, and only interact with their matching number (or number 0).
 * Additionally, the new `Mirror (Custom)` combo can be configured to create custom reflections, such as "Anything coming from above, below, or the right is reflected to the left; anything coming from the left passes through to the right". You can set which direction out a light beam (or reflected weapon) will go for each input direction, fully customly. 
+
+### Chests / Lockblocks
+* Chests can be given specific items, rather than being set per-screen
+* Can use one of 32 "Ex States" instead of the normal chest/lockblock states, allowing up to 32 extra chests/lockblocks that can be on the same screen
+* Each of the 4 directions can be set as interactable or not (as opposed to chests only being openable from below)
+* Any combination of the buttons A,B,L,R,Ex1-Ex4 can be set as interaction buttons for the combo. If any are set, the chest/block will open when that button is pressed while facing it from a valid side instead of when walking into it from a valid side.
+  * You can set a "Prompt Combo" which will display at a given x,y offset from the player (ex. above the player's head) when they are able to interact with it. For locked chests/blocks, you can also set a secondary combo to display *instead* when you are unable to unlock them.
+* Locked chests/blocks can be given various lock settings, instead of just "1 key unlocks it"
+* Locked chests/blocks can be given a message string to display when the player tries and fails to unlock it (ex. "You do not have a Small Key!")
+
+### New Combo Types
+* `Block Weapon (Custom)` can block any variety of weapons as set in the `Triggers` tab
+* `Bridge` combos can "cover up" combos on layers below them (making the covered combos solidity and type-effects not occur)
+* `Button Prompt` combos can display a prompt (ex. above player's head) when faced
+* `Cutscene Trigger` combos, combined with the `Triggers` tab features, can enter/exit a "cutscene mode" that can disable various player inputs
+* `Glass` combos allow [Light Beams](#light-beam-puzzles) to pass through even when solid
+* `Icy Floor` combos allow customizable slipperiness. Currently, only implemented to be able to slip Pushblocks, though more features are planned.
+* `Light Trigger` combos can trigger secrets as part of [Light Beam Puzzles](#light-beam-puzzles)
+* `Liquid` combos are not new- `Water` was just renamed. Though, there are a LOT more features to it now, including being able to passively heal or damage the player. (`Shallow Liquid` was changed from `Shallow Water` similarly)
+* `Mirror (Custom)` combos can reflect weapons/light beams in fancy custom ways based on directions.
+* [`Pitfall` combos](#pitfalls) act as bottomless pits, with falling similar to drowning.
+* `Push (Generic)` combo types allow fancy custom [pushblock](#new-pushblock-features) stuff
+* `Shooter` combos act as turrets. They can fire either automatically at a fixed or variable rate, or via `Triggers` tab `->ComboType Effects` flag. They can either fire friendly (player) weapons, or harmful (enemy) weapons.
+* `Signpost` combos can be read, either by walking into them or via any combination of the buttons A,B,L,R,Ex1-Ex4, configured the same way as [chests and lockblocks](#chests-lockblocks)- including the ability to set up a prompt combo. When read they cause a message string to display.
+* `Slope` combos can create custom diagonal collision. This can be useful for angled mountains in overhead view, or standard 2d sideview slopes. Additionally, in sideview, they can be set to act like optional stairs, which you will walk *past* by default, unless you are holding up/down as you walk past to indicate you want to go on the slope. Additionally, they can be set to be pass-throughable from specific directions.
+* `Spotlight` combos shoot [Light Beams](#light-beam-puzzles).
+* [`Switch` combos](#paired-switches), when triggered via `Triggers` tab `->ComboType Effects`, can toggle various states usable by `Switch Block` combos and the `Triggers` tab.
+* [`Switch Block` combos](#paired-switches) can change based on various either level-based or global states.
+* `SwitchHook Block` combos can be swapped with by the `SwitchHook` item, and can be customized with some additional settings.
+* `Torch` combos light up [New Dark Rooms](#real-dark-rooms)
