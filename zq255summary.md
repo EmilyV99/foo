@@ -6,8 +6,10 @@ ZQuest Classic has grown by a ***huge*** amount between 2.50.2/2.53 and 2.55 ver
    * [Drawing Modes](#drawing-modes)
  * [Player](#player)
  * [New Quest Features](#new-quest-features)
-   * [New Combo Features (all types)](#new-combo-features-all-types)
+   * [New Item Types](#new-item-types)
    * [New Combo Types](#new-combo-types)
+   * [New Combo Features (all types)](#new-combo-features-all-types)
+   * [New Bottles](#new-bottles)
    * [Real Dark Rooms](#real-dark-rooms)
    * [Pitfalls](#pitfalls)
    * [New Pushblock Features](#new-pushblock-features)
@@ -46,20 +48,19 @@ Additionally, you may notice that the available drawing modes have changed.
 There are plenty of new features that can be used in your quests. Some used to be popularly scripted, but are now in engine; others are brand-new ideas that were added. Altogether the focus when adding new features has been to give questmakers all the options we possibly can. This does have the effect of some systems being more difficult to learn, though in most cases we try to aim for "easy to use, difficult to master".
 
 Features below are not listed in any particular order, though I will attempt to group similar features together.
-### New Combo Features (all types)
-Combos in general have been improved drastically.
-* Each combo type has up to 8 attribytes (0 to 255 values), 8 attrishorts (-32768 to +32767 values), 4 attributes (-214748.3648 to +214748.3647 values), and 16 flags (checkboxes) for custom configuration that is specific to the combo type. Not all of these type-specific features will be covered in this summary, as many of the features are simple small customizations of the type (like damage dealt by damage combos, conveyor speed and direction, etc). Many combo types have a special "Wizard" dialog available via a button in the combo editor which is designed to make these easier to set up.
-* Every combo has checkboxes for if they are hookshot-grabbable or switch-hookable, allowing things like chests and signs to be hookable inherently.
-* In addition to the solidity square, combos now have a green `Effect` square. By default this square is filled in, and any section that is NOT filled in acts as though it is `(None)` type, regardless of its' actual type.
-* Every combo has a `General` tab, which currently has the following neat settings:
-  * Speed modification settings (apply to the player when the combo is centered under the player)
-  * Sprites / SFX that display / play in various conditions, such as when the combo appears onscreen, disappears from the screen, or is being walked/stood on by the player.
-* Every combo has the `Triggers` tab, which allows for INSANELY powerful customization of the combo through various settings. Due to the sheer number of options on the triggers tab, it may be a bit confusing to navigate, but hopefully the many `?` buttons throughout should make it easier to navigate. Creating simple behaviors should be easy; ex. a `Step->Next` trigger could be created simply by checking the `Step->` flag, and setting the `Combo Change` value to `1`. (`Step->Previous` would be just as easy, instead using `-1` for the combo change).
-  * Additionally, some combo types support the extra-special `->ComboType Effects` flag, which will cause an effect to occur related to the specific combo type. A great example of this is `Damage` combos, which will hurt the player when their `->ComboType Effects` trigger occurs (regardless of if the player is anywhere near the combo or not).
-    * A great use of this specific interaction would be a damaging "Hot Room"- by simply combining a `Timer` trigger with the `->ComboType Effects` result (optionally using an inverted item condition to make it **only trigger if you do not have a specific item**), you have yourself a ticking damage hot room in any room the combo is placed in.
-  * Going over every trigger available would make this summary far too long and complex, so have a look at the options yourself and play around with them! This system was designed with pure creativity in mind.
-* Every combo also has a `Lifting` tab, related to the `Lift Glove` itemclass which allows the player to pick up combos above their head and throw them. This can be used for things like lifting pots or bomb flowers.
-* And finally, combos now have their own script type which can be assigned to each combo.
+### New Item Types
+* `Attack Ring` items increase the damage of swords/wands/hammers (similar to whimsical ring, but 100% of the time)
+* [`Bottle Fillers` / `Bottles` / `Bug Nets`](#new-bottles) work together, allowing bottles that can be filled with multiple different types of potions/fairies/etc.
+* The `Custom Weapon 01` through `Custom Weapon 10` itemclasses spawn a basic customizable weapon of types `LW_SCRIPT1` through `LW_SCRIPT10` respectively. Especially useful when combined with the new `lweapon script` type.
+* `Item Bundle` items can give the player up to 10 other items when collected. Useful for bundling multiple items together, such as a Quiver, Bow, and Arrows.
+* `Lantern` items allow the player to give off light in [new dark rooms](#real-dark-rooms)
+* `Lift Glove` items allow picking up and throwing combos (and `Bomb` type weapons, optionally) based on settings set in the [new combo `Lifting` tab](#new-combo-features-all-types)
+* `Mirrors` allow warping to another dmap at the same screen/x/y position (depending on the dmap) to simulate parallel worlds / time travel / environment shifting type warp effects. They can optionally leave behind a portal to return. If the player tries to warp into a solid or other unsafe situation, the warp will 'bounce' them back. The new `No Mirroring` flag can be placed to prevent using these items in specific spots. Additionally, a dmap can be set to cause a mirror to warp you to the continue point instead of its usual effects.
+* `Note` items can be used to display a message string. Especially useful when combined with String Control Codes.
+* `Pearls` can prevent you from turning into [a bunny](#bunny-effect) on certain dmaps.
+* `Progressive Item`s can be configured with a sequence of up to 10 other items. They will take on the appearance of the first item in their sequence that the player does NOT currently own, and will also grant that item when collected. Especially useful for items intended to be collectible out of sequence, and 'randomizer' style quests.
+* `Refiller` items refill a counter when used. (This can be used for things like 'healing spells')
+* `SwitchHooks` work mostly identically to hookshots, except instead of grabbing hookable targets and pulling the player towards them, they grab switchable targets and teleport the player and the target, swapping their positions. Enemies with the `(None)` defense are swapped with the player when hit, as well. (The new `Switch w/ Player` defense type can be used to cause this effect when an enemy is hit with other weapon types, as well!)
 
 ### New Combo Types
 * `Block Weapon (Custom)` can block any variety of weapons as set in the `Triggers` tab
@@ -81,6 +82,31 @@ Combos in general have been improved drastically.
 * [`Switch Block` combos](#paired-switches) can change based on various either level-based or global states.
 * `SwitchHook Block` combos can be swapped with by the `SwitchHook` item, and can be customized with some additional settings.
 * `Torch` combos light up [New Dark Rooms](#real-dark-rooms)
+
+### New Combo Features (all types)
+Combos in general have been improved drastically.
+* Each combo type has up to 8 attribytes (0 to 255 values), 8 attrishorts (-32768 to +32767 values), 4 attributes (-214748.3648 to +214748.3647 values), and 16 flags (checkboxes) for custom configuration that is specific to the combo type. Not all of these type-specific features will be covered in this summary, as many of the features are simple small customizations of the type (like damage dealt by damage combos, conveyor speed and direction, etc). Many combo types have a special "Wizard" dialog available via a button in the combo editor which is designed to make these easier to set up.
+* Every combo has checkboxes for if they are hookshot-grabbable or switch-hookable, allowing things like chests and signs to be hookable inherently.
+* In addition to the solidity square, combos now have a green `Effect` square. By default this square is filled in, and any section that is NOT filled in acts as though it is `(None)` type, regardless of its' actual type.
+* Every combo has a `General` tab, which currently has the following neat settings:
+  * Speed modification settings (apply to the player when the combo is centered under the player)
+  * Sprites / SFX that display / play in various conditions, such as when the combo appears onscreen, disappears from the screen, or is being walked/stood on by the player.
+* Every combo has the `Triggers` tab, which allows for INSANELY powerful customization of the combo through various settings. Due to the sheer number of options on the triggers tab, it may be a bit confusing to navigate, but hopefully the many `?` buttons throughout should make it easier to navigate. Creating simple behaviors should be easy; ex. a `Step->Next` trigger could be created simply by checking the `Step->` flag, and setting the `Combo Change` value to `1`. (`Step->Previous` would be just as easy, instead using `-1` for the combo change).
+  * Additionally, some combo types support the extra-special `->ComboType Effects` flag, which will cause an effect to occur related to the specific combo type. A great example of this is `Damage` combos, which will hurt the player when their `->ComboType Effects` trigger occurs (regardless of if the player is anywhere near the combo or not).
+    * A great use of this specific interaction would be a damaging "Hot Room"- by simply combining a `Timer` trigger with the `->ComboType Effects` result (optionally using an inverted item condition to make it **only trigger if you do not have a specific item**), you have yourself a ticking damage hot room in any room the combo is placed in.
+  * Going over every trigger available would make this summary far too long and complex, so have a look at the options yourself and play around with them! This system was designed with pure creativity in mind.
+* Every combo also has a `Lifting` tab, related to the `Lift Glove` itemclass which allows the player to pick up combos above their head and throw them. This can be used for things like lifting pots or bomb flowers.
+* And finally, combos now have their own script type which can be assigned to each combo.
+
+### New Bottles
+The `Bottle` item type can be set to one of up to 256 separate 'slots'- you usually want at most one item per slot. When either the player picks up an item of the `Bottle Fillers` item type, makes a purchase in a `Bottle Shop` room type, or collects a Fairy with a `Bug Net`, a bottle can be filled with a type of "contents". In `Quest->Misc Data->Bottle Types`, these contents can be configured.<br/><img src="https://cdn.discordapp.com/attachments/1162478250208022679/1162809697905160372/bottletype1.png?ex=653d49eb&is=652ad4eb&hm=315a0d6913a16918137606a995935ef977b836d713422704b1dd00e6127bd437&" alt="Screenshot of the editor, showing a 'Red Potion' bottle type that restores 100% of the 'Life' counter" width="50%" height="50%"/><img src="https://cdn.discordapp.com/attachments/1162478250208022679/1162809698219720857/bottletype2.png?ex=653d49ec&is=652ad4ec&hm=d50a71f50b6ca2af1293358fe2ecc7417b147d65678161a3e35ccebca5fcf9c4&" alt="Screenshot of the editor, showing a 'Fairy' bottle type that restores 48 of the 'Life' counter, and is used automatically on death" width="50%" height="50%"/>
+The effects configured for these contents occur when a bottle item of that type is used, or automatically when the player dies while they have it if that flag is set for the type. Additionally, items of the `Bottle` itemclass will use different tiles depending on what their contents is. The tile set in the item editor is used when the type is `0`, which always represents an empty bottle. It will use the next tile (or set of tiles, if animated) when the type is `1`, the next after that for `2`, etc.
+
+### Bunny Effect
+The player can now be turned into a bunny as a status effect. This is script-accessible, and also can be inflicted by the new dmap flag `Become Bunny with no Pearl`, which will turn the player into a bunny on the entire dmap if they do not have a `Pearls` itemclass item. While the player is bunnied, a few effects occur:
+* Attempting to use any item that does not have the `Usable as Bunny` flag checked in the item editor will fail. This includes passive effects as well.
+* All items that do not have `Usable as Bunny` checked will no longer apply their Player Tile Modifiers to the player's appearance
+* The `Bunny Tile Mod`, configurable in `Init Data->Vars`, *will* be applied to the player's appearance, just like items PTMs normally do.
 
 ### Real Dark Rooms
 Enabled via the Quest Rule `New Dark Rooms`, this changes from the classic dark room style which darkens the entire palette, and changes to a style which allows circles/cones of light to reveal what's underneath the darkness.
