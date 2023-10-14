@@ -33,6 +33,21 @@ Additionally, you may notice that the available drawing modes have changed.
 There are plenty of new features that can be used in your quests. Some used to be popularly scripted, but are now in engine; others are brand-new ideas that were added. Altogether the focus when adding new features has been to give questmakers all the options we possibly can. This does have the effect of some systems being more difficult to learn, though in most cases we try to aim for "easy to use, difficult to master".
 
 Features below are not listed in any particular order, though I will attempt to group similar features together.
+### New Combo Features (all types)
+Combos in general have been improved drastically.
+* Each combo type has up to 8 attribytes (0 to 255 values), 8 attrishorts (-32768 to +32767 values), 4 attributes (-214748.3648 to +214748.3647 values), and 16 flags (checkboxes) for custom configuration that is specific to the combo type. Not all of these type-specific features will be covered in this summary, as many of the features are simple small customizations of the type (like damage dealt by damage combos, conveyor speed and direction, etc).
+* Every combo has checkboxes for if they are hookshot-grabbable or switch-hookable, allowing things like chests and signs to be hookable inherently.
+* In addition to the solidity square, combos now have a green `Effect` square. By default this square is filled in, and any section that is NOT filled in acts as though it is `(None)` type, regardless of its' actual type.
+* Every combo has a `General` tab, which currently has the following neat settings:
+  * Speed modification settings (apply to the player when the combo is centered under the player)
+  * Sprites / SFX that display / play in various conditions, such as when the combo appears onscreen, disappears from the screen, or is being walked/stood on by the player.
+* Every combo has the `Triggers` tab, which allows for INSANELY powerful customization of the combo through various settings. Due to the sheer number of options on the triggers tab, it may be a bit confusing to navigate, but hopefully the many `?` buttons throughout should make it easier to navigate. Creating simple behaviors should be easy; ex. a `Step->Next` trigger could be created simply by checking the `Step->` flag, and setting the `Combo Change` value to `1`. (`Step->Previous` would be just as easy, instead using `-1` for the combo change).
+  * Additionally, some combo types support the extra-special `->ComboType Effects` flag, which will cause an effect to occur related to the specific combo type. A great example of this is `Damage` combos, which will hurt the player when their `->ComboType Effects` trigger occurs (regardless of if the player is anywhere near the combo or not).
+    * A great use of this specific interaction would be a damaging "Hot Room"- by simply combining a `Timer` trigger with the `->ComboType Effects` result (optionally using an inverted item condition to make it **only trigger if you do not have a specific item**), you have yourself a ticking damage hot room in any room the combo is placed in.
+  * Going over every trigger available would make this summary far too long and complex, so have a look at the options yourself and play around with them! This system was designed with pure creativity in mind.
+* Every combo also has a `Lifting` tab, related to the `Lift Glove` itemclass which allows the player to pick up combos above their head and throw them. This can be used for things like lifting pots or bomb flowers.
+* And finally, combos now have their own script type which can be assigned to each combo.
+
 ### Real Dark Rooms
 Enabled via the Quest Rule `New Dark Rooms`, this changes from the classic dark room style which darkens the entire palette, and changes to a style which allows circles/cones of light to reveal what's underneath the darkness.
 * `Lantern` itemclass allows the player to cast a shape of your choice of light (from the options that have been implemented, which are currently `Circle`, `Cone`, and `Square`, as well as having a configurable size for the shape.
