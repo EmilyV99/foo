@@ -1,6 +1,17 @@
 # ZQuest Classic: 2.55 Development Summary
 ZQuest Classic has grown by a ***huge*** amount between 2.50.2/2.53 and 2.55 versions. There are many new features, for gameplay, editing, ui, ease-of-use, scripting, and really every possible part of the engine you could imagine. Here, I'm going to go through each feature in some amount of depth to show what's new.
 
+* [Editor](#editor)
+   * [GUI changes](#gui-changes) 
+   * [Drawing Modes](#drawing-modes)
+ * [Player](#player)
+ * [New Quest Features](#new-quest-features)
+   * [New Combo Features (all types)](#new-combo-features-all-types)
+   * [Real Dark Rooms](#real-dark-rooms)
+   * [Pitfalls](#pitfalls)
+   * [New Pushblock Features](#new-pushblock-features)
+   * [Light Beam Puzzles](#light-beam-puzzles)
+
 ## Editor
 ### GUI changes
 Previously, ZQ had 'Small Mode' and 'Large Mode'. This divide could no longer be feasibly supported, mainly because small mode's base resolution was simply too small to fit the GUI for many of the new features, requiring us to make entirely separate GUIs for small mode, which was simply too much work to keep up. However, numerous users took issue with this from an accessibility standpoint, as the large mode GUI had a lot of spots where text was too small to read for some, among other issues. As such, BOTH of these modes have recieved a giant overhaul, to create a brand new and more customizable GUI.
@@ -78,3 +89,15 @@ Multiple quest rules affect new push block features, of which there are several.
   * In this way, blocks can be pushed *over* a block trigger without "clicking into place" the instant it is on a trigger, and a block can "fall" into a hole on a lower layer.
 * The `Push (Generic)` combo type is a new type of pushblock, which does NOT use push *flags* at all- instead, the ways in which it can be pushed are defined as part of the combo's attributes. These combos can be set to be pushable in many unique ways, such as "down up to 3 times and left up to 3 times, but not right or up", or "left up to 2 times, and you can undo the push by pushing it back to the right, but not past its' starting point".
 * Sliding blocks can exist, either via a `Push (Generic)` with the `Icy Block` flag checked, or by any block sliding across `Icy Floor` combos with the `Slides Blocks` flag checked. (Currently, this is the ONLY use of `Icy Floor`, though more non-block-related uses are planned eventually)
+
+### Light Beam Puzzles
+<img src="https://cdn.discordapp.com/attachments/1162478250208022679/1162563996931600474/lightbeam.png?ex=653c6518&is=6529f018&hm=4b8b8ddd2d5cf6eec70a0b7442590f9b4156626d6e59154d9f383e84af0764ba&" alt="Screenshot of the player, showcasing a beam of light reflecting off of two mirrors before hitting a wall" width="50%" height="50%"/>
+
+* Light Beams are shot out of `Spotlight` combos, in any of the 4 main directions, or aimed from the camera at the screen for a true "spotlight" effect. These beams will bounce off of any mirror combos and be duplicated by prism combos in the same way weapon reflection works.
+* Beams continue until they exit the side of the screen or hit a solid combo. (Exception: the `Glass` combo type allows beams to pass through despite solidity)
+* The `Light Trigger` combo type has two states, active and inactive. These combos must be set up in pairs, as the combo changes between the two combos in the pair when hit with a beam or when a beam stops hitting it. Each trigger can be required to either be activated by a beam, or activated by LACK of a beam. When all triggers onscreen are activated, the screen's secrets will trigger, and the screen's light beam state will be set, permanently "solving" the beam puzzle.
+* Both `Spotlight` combos and `Light Trigger` combos can be given a `Trigger Set`, as a value from 0 to 32. These can be used for puzzles requiring "different colored beams affect their matching color targets" type logic.
+  * Any `Spotlight` with a `Trigger Set` of `0` will trigger ANY `Light Trigger`.
+  * Any `Light Trigger` with a `Trigger Set` of `0` will be triggered by ANY `Spotlight`.
+  * `Trigger Set` of 1 through 32 are unique, and only interact with their matching number (or number 0).
+* Additionally, the new `Mirror (Custom)` combo can be configured to create custom reflections, such as "Anything coming from above, below, or the right is reflected to the left; anything coming from the left passes through to the right". You can set which direction out a light beam (or reflected weapon) will go for each input direction, fully customly. 
