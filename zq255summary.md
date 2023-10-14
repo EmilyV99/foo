@@ -11,6 +11,7 @@ ZQuest Classic has grown by a ***huge*** amount between 2.50.2/2.53 and 2.55 ver
    * [New Combo Features (all types)](#new-combo-features-all-types)
    * [New Combo Types](#new-combo-types)
    * [Improved Combo Types](#improved-combo-types)
+   * [Fire Types](#fire-types)
    * [New Bottles](#new-bottles)
    * [Bunny Effect](#bunny-effect)
    * [Real Dark Rooms](#real-dark-rooms)
@@ -66,7 +67,46 @@ Features below are not listed in any particular order, though I will attempt to 
 * `SwitchHooks` work mostly identically to hookshots, except instead of grabbing hookable targets and pulling the player towards them, they grab switchable targets and teleport the player and the target, swapping their positions. Enemies with the `(None)` defense are swapped with the player when hit, as well. (The new `Switch w/ Player` defense type can be used to cause this effect when an enemy is hit with other weapon types, as well!)
 
 ### Improved Item Types
-* foo
+* `Arrows`
+  * Being able to pick up items is a per-arrow flag, instead of tied to a QR
+  * Can be set to be able to pick up ANY item (instead of just 'dropped' items)
+  * Can be set to specifically be able to pick up any Key type items
+  * Max number of arrow weapons that can be onscreen at once is configurable
+* `Bait` has several new flags to customize its' use
+* `Bombs`/`Super Bombs` have customizable radius, can be set to be liftable by `Lift Glove` items (including optionally having the bomb automatically in your hands when used, instead of placed).
+* `Books` have a couple more flags for how they interact with wand magic, and [customizable fire levels](#fire-types)
+* `Boomerangs`
+  * Similar item pickup settings to `Arrows`
+  * Separate settings for `Drags Items` and `Reflects Enemy Projectiles` (shared with `Hookshots` and `SwitchHooks`)
+  * [Customizable fire levels](#fire-types)
+* `Boots` can be set as `Heavy`, which affects some combo types
+* `Bracelets` can have a set use count per screen, instead of once or infinite
+* `Candles` can have a custom fire step speed, max fires on screen, and use count per screen (instead of once or infinite). Also has [customizable fire levels](#fire-types).
+* `Clocks` can be set to be active-use (equipped to a button) instead of on-pickup.
+* `Divine Escape` (previously `Farore's Wind`) can be set to act like F6->Continue when used (which includes the health restore and such)
+* `Divine Fire` (previously `Din's Fire`) has [customizable fire levels](#fire-types)
+* `Divine Protection` (previously `Nayru's Love`) was renamed
+* `Fairies` can be tied to a specific [bottle fill type](#new-bottles) which represents what you catch when using a `Bug Net` on them
+* `Flippers` can be customized with custom dive duration, cooldown, dive button, and the ability to press dive again while underwater to 'cancel' and resurface.
+* `Hookshots` can (experimentally) shoot diagonally, and have several changes in common with `Boomerangs` related to item pickup and reflecting enemy projectiles.
+* `Kill All Enemies` can be set to be active-use (equipped to a button) instead of on-pickup.
+* `Lenses` can have their various magical effects toggled separately
+* `Peril Rings` can reduce damage by a percentage instead of a divisor for better fine-grained control
+* `Rafts` can have customized movement speed
+* `Rings` can reduce damage by a percentage instead of a divisor for better fine-grained control
+* `Roc Items`
+  * Can be set to a hardcoded button(s) from A,B,L,R,Ex1-Ex4
+  * Can have multiple 'jumps', allowing jumping a set number of times in mid-air
+  * Configurable `Coyote Time`
+  * Can use jump power of `Power / 100` instead of `(Power + 2) * 80`, allowing for finer jump height control
+  * Has options related to altering gravity/terminal velocity while holding the jump button
+* `Shields`
+  * can be set to be active-use (equipped to a button) instead of passive.
+    * can change player speed while holding shield out
+    * can lock player direction (strafe) while holding shield out
+  * can protect any combination of the player's 4 sides
+    * If set to be active-use, can set separate active and passive sides
+* `Stomp Boots` allow bouncing off of enemies, and can also be configured to bounce off of certain enemy projectiles
 
 ### New Combo Features (all types)
 Combos in general have been improved drastically.
@@ -121,6 +161,11 @@ Combos in general have been improved drastically.
 * `Liquid` (renamed from `Water`) has had many features added now, including being able to passively heal or damage the player, require higher level flippers to swim in, have a custom drown damage/sfx, and can have some corners of it act as 'shallow' based on some flags. (`Shallow Liquid` was changed from `Shallow Water` similarly)
 * [`Lock Block` combos](#chests--lockblocks) are now highly configurable. (`Triggers` tab features can attempt to unlock the block)
 * `Save Point` type combos can be set to restore a percentage of the player's Life and/or Magic when interacted with, in addition to popping up the save menu. (`Triggers` tab features can 'interact' with the save point)
+
+### Fire Types
+Previously, there were 4 different types of fire; 'Level 1 candle' (any), 'Level 2+ candle' (red candle), 'Magic' (book), 'Din's Fire'. The exact way some of these worked (such is if Din's Fire fire would trigger 'Magic' fire flags) actually changed several times in the program's history... but now these are all customizable! The system has been slightly tweaked, and now there are 4 distinctly labelled levels of fire (`Any`, `Strong`, `Magic`, `Divine`). Any `Fire` type weapon will always trigger `Any` type fire, but what other types it can trigger are completely configurable on the items (or via scripts). `Boomerang` items also have these settings, though must be specifically set to trigger `Any` type fire.
+
+Additionally, via the combo editor `Triggers` tab, a combo can "ignite" certain weapons that touch it, granting them the property of one or more of these fire types (ex. 'shooting an arrow through a torch'). This does NOT have a graphical effect on the weapon by default, that must be scripted if desired.
 
 ### New Bottles
 The `Bottle` item type can be set to one of up to 256 separate 'slots'- you usually want at most one item per slot. When either the player picks up an item of the `Bottle Fillers` item type, makes a purchase in a `Bottle Shop` room type, or collects a Fairy with a `Bug Net`, a bottle can be filled with a type of "contents". In `Quest->Misc Data->Bottle Types`, these contents can be configured.<br/><img src="https://cdn.discordapp.com/attachments/1162478250208022679/1162809697905160372/bottletype1.png?ex=653d49eb&is=652ad4eb&hm=315a0d6913a16918137606a995935ef977b836d713422704b1dd00e6127bd437&" alt="Screenshot of the editor, showing a 'Red Potion' bottle type that restores 100% of the 'Life' counter" width="50%" height="50%"/><img src="https://cdn.discordapp.com/attachments/1162478250208022679/1162809698219720857/bottletype2.png?ex=653d49ec&is=652ad4ec&hm=d50a71f50b6ca2af1293358fe2ecc7417b147d65678161a3e35ccebca5fcf9c4&" alt="Screenshot of the editor, showing a 'Fairy' bottle type that restores 48 of the 'Life' counter, and is used automatically on death" width="50%" height="50%"/>
