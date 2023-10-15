@@ -4,7 +4,11 @@ ZQuest Classic has grown by a ***huge*** amount between 2.50.2/2.53 and 2.55 ver
 * [Editor](#editor)
    * [GUI changes](#gui-changes) 
    * [Drawing Modes](#drawing-modes)
+   * [Tileset Loading](#tileset-loading)
+   * [Quest Rules](#quest-rules)
  * [Player](#player)
+ * [Quest Packaging](#quest-packaging)
+ * [Test Mode](#test-mode)
  * [New Quest Features](#new-quest-features)
    * [New Item Types](#new-item-types)
    * [Improved Item Types](#improved-item-types)
@@ -46,7 +50,21 @@ Additionally, you may notice that the available drawing modes have changed.
 * Pool drawing mode is entirely new; combo pools are weighted collections of combos, and when drawn on the screen, a random combo is selected from the pool for each position. This is useful for randomized decorations, like cracked/mossy/etc floor tiles, or variety in flowers/grass. Actions like floodfill (`Ctrl+Click`) work as expected, filling each position with a separately randomized combo. Undo/Redo do not re-randomize, though placing the pool again obviously will.<br/><img src="https://cdn.discordapp.com/attachments/1162478250208022679/1162496106056388799/combopool.png?ex=653c25dd&is=6529b0dd&hm=f63e8fa647180c16b8db5e3f07c7fc4c57ee16a55fd793a569e83466220189be&" alt="Screenshot of the combo pool editor" width="50%" height="50%"/>
 * Auto Combo drawing mode has some brand-new features, as well as everything the old `Relational` and `Dungeon Carving` modes had, merged into one mode. This allows you to set up specificly-laid-out sets of combos, and chooses which combos to place smartly based on the surrounding combos on the screen. This can be used to automatically draw entire mountains, lakes, etc, automatically handling the edges/corners for you as you draw.<br/><img src="https://cdn.discordapp.com/attachments/1162478250208022679/1162497044045365340/autocombo.png?ex=653c26bd&is=6529b1bd&hm=d7dfbdacc62ca22758c20d592f858c965500565b8fa0fa9f45fe4ff0f62fa7b2&" alt="Screenshot of the auto combo editor" width="50%" height="50%"/>
 
+### Tileset Loading
+Via `File->Load Tileset`, you can start a new quest using an existing tileset. Unlike just using `File->Open`, this method gives you some help setting up a fresh quest. It allows you to clear some aspects of the tileset (maps to remove example screens, scripts to remove packaged scripts, and the header to clear the title/author of the tileset), and then gives you a dialog  that allows you to set some basic things (such as quest rules, the quest header, and map count) for your new quest.
+
+### Quest Rules
+Quest Rules used to require swapping between a bunch of different tabs to search for the rules you want; but now you can just search for them!<br/><img src="https://cdn.discordapp.com/attachments/1162478250208022679/1162942857317994517/qrsearch.png?ex=653dc5ef&is=652b50ef&hm=cb5d00928d8b0f3bc5f84acc7d8e12b1d3e9ec24e0fea7c3460d110620e313ca&" alt="Screenshot of the editor, showing quest rules being searchable now" width="50%" height="50%"/>
+
+Additionally, `Rule Templates` have been added. Unlike `Rulesets`, which set ***every single quest rule***, `Rule Templates` will leave most quest rules alone, and only set **related** quest rules.<br/><img src="https://cdn.discordapp.com/attachments/1162478250208022679/1162942857695469679/qrtemplate.png?ex=653dc5ef&is=652b50ef&hm=c7bbeca55c77921608c24ab7fb7f61403a648a6fbef3f0cb595abfcf98956acb&" alt="Screenshot of the editor, showing the Rule Templates dialog" width="50%" height="50%"/>
+
 ## Player
+
+## Quest Packaging
+Via `File->Export->Package`, you can now create a 'package', containing your own custom quest `.exe` and a folder containing everything it needs to run. Running this `.exe` can either run 'standalone' mode for your quest, or the new 'only' mode. 'Only' mode allows you to select save files as normal, except *only your quest* can be played, automatically skipping quest file selection.
+
+## Test Mode
+Via `Quest->Test`, you can launch your quest in the player in a 'test' mode. This will spawn you on the screen currently being edited (the editor doesn't know what dmap to use, though it attempts to automatically figure it out for you. If it's wrong you may need to select the dmap manually). In this test launch, there is no save select screen- any action that would send you to the save screen just immediately re-loads the same test file. While in test mode, cheats are automatically enabled to maximum. Additionally, test mode can use a separate Init Data, to spawn with specific items. This mode is designed to make testing specific sections of your quest much easier.
 
 ## New Quest Features
 There are plenty of new features that can be used in your quests. Some used to be popularly scripted, but are now in engine; others are brand-new ideas that were added. Altogether the focus when adding new features has been to give questmakers all the options we possibly can. This does have the effect of some systems being more difficult to learn, though in most cases we try to aim for "easy to use, difficult to master".
