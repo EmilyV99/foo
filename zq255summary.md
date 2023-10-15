@@ -25,7 +25,7 @@ ZQuest Classic has grown by a ***huge*** amount between 2.50.2/2.53 and 2.55 ver
    * [Chests / Lockblocks](#chests--lockblocks)
  * [New Subscreen Editor](#new-subscreen-editor)
  * [Scripting](#scripting)
-   * [New Script Types](#new-script-types)
+   * [Script Types](#script-types)
    * [Generic Scripts](#generic-scripts)
 
 ## Editor
@@ -262,7 +262,48 @@ The entire subscreen editor and backend functionality of subscreens has been rew
 * 4 Item Buttons - Quest Rules allow new `X` and `Y` item buttons (which use `Ex1` and `Ex2` respectively) in-engine!
 
 ## Scripting
-### New Script Types
-* TODO
+### Script Types
+* `Global` scripts have some new slots:
+  * `onContinue` was renamed to `onSaveLoad` to more accurately reflect when it runs
+  * `onLaunch` runs after both `Init` and `onSaveLoad`, and can run for multiple frames. The opening wipe will not play until the script exits, making it perfect for things like scripted title screens!
+  * `onContGame` runs when `F6->Continue` is used
+  * `onF6Menu` allows a custom-scripted replacement for the F6 menu
+  * `onSave` runs when the game is saved by any method
+* `Hero` scripts have specific slots similar to global scripts.
+  * `Init` runs when the player object is reset (such as when the game is launched, or after respawning after death). Runs for only 1 frame.
+  * `Active` works pretty much the same as the `Global Active`
+  * `onDeath` runs when the player dies, allowing custom death continue/save/etc menus
+  * `onWin` runs when the player wins the quest using the `Win Game` flag, before the engine credits sequence
+* `ffc` scripts haven't changed much, though now support `Waitdraw()` (as do most script types)
+* `dmapdata` scripts are assigned to each dmap, and can be assigned to 4 different slots
+  * `Active` slot runs similarly to the `Global Active`, but only on the set dmap
+  * `Active Subscreen` slot runs ***INSTEAD*** of the engine subscreen when `Start` is pressed
+  * `Passive Subscreen` slot runs similarly to the `Global Active`, but also has a couple special cases such as running while a `Potion` item is refilling your health
+  * `Map` slot runs ***INSTEAD*** of the engine map when `Map` is pressed
+* `screendata` scripts are set on each screen, and can `Run on Screen Init` similarly to ffc scripts
+* `npc` scripts are set in the enemy editor for each enemy (running on the enemy itself)
+* `eweapon` scripts are set in the enemy editor for each enemy (running on each weapon the enemy fires)
+* `lweapon` scripts are set in the item editor for each item (running on each weapon the item fires)
+* `itemsprite` scripts are set in the item editor for each item (running on the item itself when the item is onscreen)
+* `itemdata` scripts were renamed from `item` scripts (to differentiate them from `itemsprite` scripts)
+* `combodata` scripts are set in the combo editor for each combo
+* [`generic` scripts](#generic-scripts) are extra-special and can do many fancy things
+* `subscreendata` scripts are set in the subscreen editor for each Active Subscreen and run while it is open
 ### Generic Scripts
-TODO
+Generic scripts are designed to allow several things that other script types can't handle. There are overall 3 different ways that they can be used.
+#### Frozen Mode
+Generic scripts can run in `Frozen` mode when launched in several ways-
+* via script command `genericdata->RunFrozen()`
+* via combo `Triggers` tab
+* via String Control Code
+* via button press on a configured active subscreen widget
+
+When a `Frozen` mode script runs, everything in the entire engine pauses completely except for the one script until it exits. This allows pop-up menus that freeze everything for you.
+#### Timed Active
+Each generic script can be set to run similarly to the `Global Active`, either by having `Run from Start` checked in `Init Data` for the script slot, or `genericdata->Running` being set to `true` via script for the slot.
+
+By using `Waitframe()` and/or the special command `WaitTo()`, generic scripts run this way can wait to many specific timings. This is a *replacement* for the standard `Waitdraw()` in this script type.
+#### Event Active
+Each generic script can be set to run similarly to the `Global Active`, either by having `Run from Start` checked in `Init Data` for the script slot, or `genericdata->Running` being set to `true` via script for the slot.
+
+By using the special command `WaitEvent()`, the script will wait for a specific game event to occur (from a list that you can either set in `Init Data` or via `genericdata->EventListen[]`). Using the array `Game->EventData[]`, these scripts can read details about the event, and even change them. For example, a script that listens for the `Hero Hit` event will run when the player gets hit by something- it can read what was going to hit them, and how much damage it was going to do... and it can also *change* how much damage will be dealt, or even *cancel the hit entirely*. This allows for some quite powerful scripts that would otherwise not be possible.
