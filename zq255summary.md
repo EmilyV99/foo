@@ -6,6 +6,7 @@ ZQuest Classic has grown by a ***huge*** amount between 2.50.2/2.53 and 2.55 ver
    * [Drawing Modes](#drawing-modes)
    * [Tileset Loading](#tileset-loading)
    * [Quest Rules](#quest-rules)
+   * [Tile Editor](#tile-editor)
  * [Player](#player)
  * [Quest Packaging](#quest-packaging)
  * [Test Mode](#test-mode)
@@ -61,6 +62,20 @@ Via `File->Load Tileset`, you can start a new quest using an existing tileset. U
 Quest Rules used to require swapping between a bunch of different tabs to search for the rules you want; but now you can just search for them!<br/><img src="https://cdn.discordapp.com/attachments/1162478250208022679/1162942857317994517/qrsearch.png?ex=653dc5ef&is=652b50ef&hm=cb5d00928d8b0f3bc5f84acc7d8e12b1d3e9ec24e0fea7c3460d110620e313ca&" alt="Screenshot of the editor, showing quest rules being searchable now" width="50%" height="50%"/>
 
 Additionally, `Rule Templates` have been added. Unlike `Rulesets`, which set ***every single quest rule***, `Rule Templates` will leave most quest rules alone, and only set **related** quest rules.<br/><img src="https://cdn.discordapp.com/attachments/1162478250208022679/1162942857695469679/qrtemplate.png?ex=653dc5ef&is=652b50ef&hm=c7bbeca55c77921608c24ab7fb7f61403a648a6fbef3f0cb595abfcf98956acb&" alt="Screenshot of the editor, showing the Rule Templates dialog" width="50%" height="50%"/>
+
+### Tile Editor
+<img src="https://cdn.discordapp.com/attachments/1162478250208022679/1163171631489896629/tileeditor1.png?ex=653e9aff&is=652c25ff&hm=3b7a9f35c4513310a1456f2b3ac0b761c93191c860e16e8b605124084437fcfc&" alt="Screenshot of the tile editor for a 4-bit tile" width="50%" height="50%"/><img src="https://cdn.discordapp.com/attachments/1162478250208022679/1163171631749922876/tileeditor2.png?ex=653e9aff&is=652c25ff&hm=b80ce40de3f7990869153a8168c3388a55f814dd1317dc44e317ba9163f95eb8&" alt="Screenshot of the tile editor for an 8-bit tile" width="50%" height="50%"/>
+
+The tile editor has been revamped with some new features and options. You can now:
+* Hide the grid between pixels
+* Show a thick grid splitting the tile into quarters
+  * ...and toggle various rotation/reflection modes to simplify drawing
+* Toggle the 'X' over transparent pixels
+* Toggle between transparent pixels being filled with color 0 or being see-through (showing the dialog color behind the editor pane)
+* See what colors (by name) make up a tile (left-hand side)
+* Better see what color you are hovering over on the palette (via highlight)
+  * ...and see color name of hovered color
+* Edit palettes directly from the tile editor
 
 ## Player
 
