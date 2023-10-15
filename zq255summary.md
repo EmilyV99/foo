@@ -23,6 +23,10 @@ ZQuest Classic has grown by a ***huge*** amount between 2.50.2/2.53 and 2.55 ver
    * [New Pushblock Features](#new-pushblock-features)
    * [Light Beam Puzzles](#light-beam-puzzles)
    * [Chests / Lockblocks](#chests--lockblocks)
+ * [New Subscreen Editor](#new-subscreen-editor)
+ * [Scripting](#scripting)
+   * [New Script Types](#new-script-types)
+   * [Generic Scripts](#generic-scripts)
 
 ## Editor
 ### GUI changes
@@ -246,3 +250,19 @@ Multiple quest rules affect new push block features, of which there are several.
   * You can set a "Prompt Combo" which will display at a given x,y offset from the player (ex. above the player's head) when they are able to interact with it. For locked chests/blocks, you can also set a secondary combo to display *instead* when you are unable to unlock them.
 * Locked chests/blocks can be given various lock settings, instead of just "1 key unlocks it"
 * Locked chests/blocks can be given a message string to display when the player tries and fails to unlock it (ex. "You do not have a Small Key!")
+
+## New Subscreen Editor
+The entire subscreen editor and backend functionality of subscreens has been rewritten. I won't go over it in too extreme a depth here, but will give a quick overview of what's new.
+* Separated types - Active and Passive subscreens used to be shown in a single list, and you could convert subscreens between these two types. This is no longer the case- each type has a separate list now.
+* Overlay subscreens- a brand new third type of subscreen. Overlay subscreens are 256x224 pixels large, covering the entire visible screen area. These draw *over* the passive (and active) subscreens, useful for drawing some elements over the actual play area (like for example a key counter in the lower-left of the screen or etc)
+* Better mouse editing - click and drag widgets around the subscreen, finally! (Or swap to how the mouse used to work with a setting, if you'd like)
+* Pages - Active subscreens can have multiple separate pages now, allowing much more to be on your subscreens
+* Selector freedom - any widget, not just items, can be set to be selectable by the selector.
+* Scripts - The new `subscreendata` script type runs while the active subscreen it is assigned to is open. Additionally, any widget that is visitable by the selector can be given a [`generic` script](#generic-scripts) to run in `Frozen` mode when a specified button (from A,B,L,R,Ex1-Ex4) is pressed while it is selected.
+* 4 Item Buttons - Quest Rules allow new `X` and `Y` item buttons (which use `Ex1` and `Ex2` respectively) in-engine!
+
+## Scripting
+### New Script Types
+* TODO
+### Generic Scripts
+TODO
